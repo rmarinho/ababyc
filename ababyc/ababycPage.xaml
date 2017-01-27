@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:ababyc" x:Class="ababyc.ababycPage">
+	<Grid>
+		<Grid.Resources>
+			<ResourceDictionary>
+				<DataTemplate x:Key="TextTemplate">
+					<ViewCell>
+						<local:GlowCustomControl AnimateGlow="True" AbsoluteLayout.LayoutBounds="{Binding Bounds}" IsEnabled="{Binding IsVisible,Mode=TwoWay}" GlowColor="{Binding StrokeColor}">
+							<Label Text="{Binding Letter}" FontSize="150" TextColor="{Binding FillColor}" />
+						</local:GlowCustomControl>
+					</ViewCell>
+				</DataTemplate>
+				<DataTemplate x:Key="ShapeTemplate">
+					<ViewCell>
+						<local:ShapeGlowCustomControl ShapeType="{Binding Type}" AnimateGlow="True" ShapeColor="{Binding FillColor}" AbsoluteLayout.LayoutBounds="{Binding Bounds}" IsEnabled="{Binding IsVisible,Mode=TwoWay}" GlowColor="{Binding StrokeColor}">
+						</local:ShapeGlowCustomControl>
+					</ViewCell>
+				</DataTemplate>
+				<local:FigureTemplateSelector x:Key="FigureTemplateSelector" TextTemplate="{StaticResource TextTemplate}" ShapeTemplate="{StaticResource ShapeTemplate}" />
+			</ResourceDictionary>
+		</Grid.Resources>
+		<Label Text="{Binding HelloMessage}" HorizontalOptions="Start" VerticalOptions="Start" Margin="20" />
+		<local:ItemsControl ItemsSource="{Binding Figures}" ItemTemplate="{StaticResource FigureTemplateSelector}">
+		</local:ItemsControl>
+		<BoxView x:Name="interactionBox" />
+	</Grid>
+</ContentPage>
