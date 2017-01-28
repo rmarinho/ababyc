@@ -98,10 +98,5 @@ namespace ababyc.iOS
 					return;
 			}
 		}
-
-
-		void UpdateSource()
-		{
-		}
 	}
 }
