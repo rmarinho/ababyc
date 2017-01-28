@@ -21,18 +21,18 @@ namespace ababyc.Droid
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return false;
 			}
 		}
 
 		public void SetLanguage(Language language)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		public Task SpeakSSMLAsync(string text)
 		{
-			throw new NotImplementedException();
+			return Task.FromResult(true);
 		}
 
 		public void OnInit(OperationResult status)
@@ -63,7 +63,7 @@ namespace ababyc.Droid
 
 		public Task SpeakUriStreamAsync(Uri url)
 		{
-			throw new NotImplementedException();
+			return Task.FromResult(true);
 		}
 	}
 }
