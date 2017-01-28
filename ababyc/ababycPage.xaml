@@ -12,8 +12,7 @@
 				</DataTemplate>
 				<DataTemplate x:Key="ShapeTemplate">
 					<ViewCell>
-						<local:ShapeGlowCustomControl ShapeType="{Binding Type}" AnimateGlow="True" ShapeColor="{Binding FillColor}" AbsoluteLayout.LayoutBounds="{Binding Bounds}" IsEnabled="{Binding IsVisible,Mode=TwoWay}" GlowColor="{Binding StrokeColor}">
-						</local:ShapeGlowCustomControl>
+						<local:ShapeGlowCustomControl ShapeType="{Binding Type}" AnimateGlow="True" ShapeColor="{Binding FillColor}" AbsoluteLayout.LayoutBounds="{Binding Bounds}" IsEnabled="{Binding IsVisible,Mode=TwoWay}" GlowColor="{Binding StrokeColor}" />
 					</ViewCell>
 				</DataTemplate>
 				<local:FigureTemplateSelector x:Key="FigureTemplateSelector" TextTemplate="{StaticResource TextTemplate}" ShapeTemplate="{StaticResource ShapeTemplate}" />
