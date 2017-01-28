@@ -24,7 +24,7 @@ namespace ababyc.iOS
 
 		public void SetLanguage(Language language)
 		{
-			string locale = DEFAULT_LOCALE;
+			string locale = language.Locale ?? DEFAULT_LOCALE;
 			_voice = AVSpeechSynthesisVoice.FromLanguage(locale) ?? AVSpeechSynthesisVoice.FromLanguage(DEFAULT_LOCALE);
 		}
 

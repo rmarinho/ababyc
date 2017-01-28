@@ -19,6 +19,7 @@ namespace ababyc.ViewModels
 		ISoundService _soundService;
 		ILanguageService _languageService;
 		ResourcesService _resourceService;
+		Language _currentLanguage;
 		Timer timer;
 		bool disposed;
 		public MainViewModel()
@@ -47,6 +48,8 @@ namespace ababyc.ViewModels
 
 			//play the intro sound
 			_soundService.PlayEmbebedResourceAsync(introSound);
+
+			_currentLanguage = _languageService.DefaultLanguage;
 		}
 
 		public void HookInterationService(IInteractionService interactionservice)
@@ -73,16 +76,9 @@ namespace ababyc.ViewModels
 			}
 
 			_speakService = null;
-
 		}
 
-		public string HelloMessage
-		{
-			get
-			{
-				return _resourceService.GetResourceText(helloMessage, _languageService.DefaultLanguage.Locale);
-			}
-		}
+		public string HelloMessage => _resourceService.GetResourceText(helloMessage, _languageService.DefaultLanguage.Locale);
 
 		ObservableCollection<Figure> _figures = new ObservableCollection<Figure>();
 		public ObservableCollection<Figure> Figures
@@ -99,22 +95,23 @@ namespace ababyc.ViewModels
 
 		async void InteractionService_InteractionOccured(object sender, InteractionEventArgs e)
 		{
+			Task process = null;
 			switch (e.Interaction)
 			{
 				case InteractionType.MouseClick:
-					await ProcessKey("55");
+					process = GetRandomBoolean() ? ProcessKey("55") : ProcessKey(GetRandomLetter());
 					break;
 				case InteractionType.MouseMove:
 					break;
 				case InteractionType.KeyPress:
-					await ProcessKey(e.Key);
+					process = ProcessKey(e.Key);
 					break;
 				case InteractionType.Exit:
 					Clear();
 					break;
-				default:
-					break;
 			}
+			if (process != null)
+				await process;
 		}
 
 		void Clear()
@@ -153,20 +150,14 @@ namespace ababyc.ViewModels
 		void CheckFiguresToRemove()
 		{
 			if (Figures.Count >= Settings.Default.ClearAfter)
-				Device.BeginInvokeOnMainThread(() =>
-				{
-					Figures.RemoveAt(0);
-				});
+				Device.BeginInvokeOnMainThread(() => Figures.RemoveAt(0));
 
 			for (int i = Figures.Count - 1; i >= 0; i--)
 			{
 				var shape = Figures[i];
 				if (!shape.IsVisible)
 				{
-					Device.BeginInvokeOnMainThread(() =>
-					{
-						Figures.Remove(shape);
-					});
+					Device.BeginInvokeOnMainThread(() => Figures.Remove(shape));
 				}
 			}
 		}
@@ -201,7 +192,6 @@ namespace ababyc.ViewModels
 			var y = RandomBetweenTwoNumbers(0, Convert.ToInt32(availableHeight - figure.Size.Height));
 			figure.Position = new Point(x, y);
 
-
 			// var nameFunc = hashTableOfFigureGenerators[Utils.RandomBetweenTwoNumbers(0, hashTableOfFigureGenerators.Count - 1)];
 			Figures.Add(figure);
 			await Speak(figure);
@@ -212,6 +202,7 @@ namespace ababyc.ViewModels
 			if (!Settings.Default.Speak)
 				return;
 
+			_speakService.SetLanguage(_currentLanguage);
 			var shape = figure as ShapeFigure;
 			if (shape != null)
 			{
