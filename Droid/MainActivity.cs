@@ -17,7 +17,7 @@ namespace ababyc.Droid
 		{
 			TabLayoutResource = Resource.Layout.Tabbar;
 			ToolbarResource = Resource.Layout.Toolbar;
-			MobileCenter.Start("eb06135e-bd1e-4aa9-ac2c-d58f1a1e5037", typeof(Analytics), typeof(Crashes));
+			MobileCenter.Start("48223df6-db72-4346-a7c2-5ceef3dcf544", typeof(Analytics), typeof(Crashes));
 			base.OnCreate(bundle);
 
 			Forms.Init(this, bundle);
