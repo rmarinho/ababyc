@@ -10,6 +10,7 @@ namespace ababyc
 		public App()
 		{
 			InitializeComponent();
+			DependencyService.Register<ResourcesService>();
 			MobileCenter.Start(typeof(Analytics), typeof(Crashes));
 			MainPage = new ababycPage();
 		}

@@ -62,6 +62,7 @@
     <Compile Include="Views\GlowCustomControl.cs" />
     <Compile Include="Views\BaseCustomControl.cs" />
     <Compile Include="Views\ShapeGlowCustomControl.cs" />
+    <Compile Include="Services\ResourceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
