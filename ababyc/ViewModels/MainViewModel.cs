@@ -18,10 +18,12 @@ namespace ababyc.ViewModels
 		ISpeakService _speakService;
 		ISoundService _soundService;
 		ILanguageService _languageService;
+		ResourcesService _resourceService;
 		Timer timer;
 		bool disposed;
 		public MainViewModel()
 		{
+			_resourceService = DependencyService.Get<ResourcesService>();
 			_speakService = DependencyService.Get<ISpeakService>();
 			_soundService = DependencyService.Get<ISoundService>();
 			_languageService = DependencyService.Get<ILanguageService>();
@@ -35,11 +37,8 @@ namespace ababyc.ViewModels
 			if (_soundService == null)
 				throw new ArgumentNullException(nameof(_soundService));
 
-
-			timer = new Timer((obj) =>
-			{
-				CheckFiguresToRemove();
-			}, null, timerDelay, timerDelay);
+			//timer to check disable figures and remove them from the collection
+			timer = new Timer((obj) => CheckFiguresToRemove(), null, timerDelay, timerDelay);
 
 			//check native interactionService
 			var interactionService = DependencyService.Get<IInteractionService>();
@@ -81,7 +80,7 @@ namespace ababyc.ViewModels
 		{
 			get
 			{
-				return _languageService.GetResourceText(helloMessage);
+				return _resourceService.GetResourceText(helloMessage, _languageService.DefaultLanguage.Locale);
 			}
 		}
 
@@ -216,7 +215,7 @@ namespace ababyc.ViewModels
 			var shape = figure as ShapeFigure;
 			if (shape != null)
 			{
-				var textToRead = _languageService.GetLanguageTextForShape(shape.Type);
+				var textToRead = _resourceService.GetLanguageTextForShape(shape.Type, _languageService.DefaultLanguage.Locale);
 				if (textToRead == null)
 					textToRead = shape.ToString();
 				await _speakService.SpeakTextAsync(textToRead);
@@ -225,7 +224,7 @@ namespace ababyc.ViewModels
 				var textToRead = figure.ToString();
 				if (_speakService.SupportsSSML)
 				{
-					await _speakService.SpeakSSMLAsync(_languageService.GetLanguageTextForLetter(textToRead));
+					await _speakService.SpeakSSMLAsync(_resourceService.GetLanguageTextForLetter(textToRead));
 				}
 				else
 				{
