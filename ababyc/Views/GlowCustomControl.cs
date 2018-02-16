@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ababyc.Models;
+using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 
 namespace ababyc
 {
 	public class GlowCustomControl : BaseCustomControl
 	{
-		public GlowCustomControl()
-		{
-
-		}
-
-		protected override void OnPropertyChanged(string propertyName = null)
-		{
-			if (propertyName == nameof(View.Width))
-			{
-			}
-			base.OnPropertyChanged(propertyName);
-		}
-
 		public static readonly BindableProperty AnimateGlowProperty = BindableProperty.Create(nameof(AnimateGlow), typeof(bool), typeof(GlowCustomControl), false, propertyChanged: OnAnimateGlowChanged);
 
 		public static readonly BindableProperty GlowColorProperty = BindableProperty.Create(nameof(GlowColor), typeof(Color), typeof(GlowCustomControl), Color.Green, propertyChanged: OnAnimateGlowChanged);

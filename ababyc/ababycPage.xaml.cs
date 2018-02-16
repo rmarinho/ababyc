@@ -28,6 +28,7 @@ namespace ababyc
 	{
 		public FigureTemplateSelector()
 		{
+
 		}
 
 		protected override DataTemplate OnSelectTemplate(object item, BindableObject container)

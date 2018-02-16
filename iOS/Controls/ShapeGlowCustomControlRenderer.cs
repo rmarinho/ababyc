@@ -11,7 +11,7 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(ShapeGlowCustomControl), typeof(ShapeGlowCustomControlRenderer))]
+//[assembly: ExportRenderer(typeof(ShapeGlowCustomControl), typeof(ShapeGlowCustomControlRenderer))]
 
 namespace ababyc.iOS
 {
